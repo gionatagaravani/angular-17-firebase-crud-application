@@ -1,4 +1,4 @@
-# Angular17FirebaseCrudApplication
+# Angular 17 Firebase CRUD Application
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
 
