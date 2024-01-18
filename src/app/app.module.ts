@@ -7,10 +7,14 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
+import { UsersListComponent } from './components/users-list/users-list.component';
+import { UsersCreateComponent } from './components/users-create/users-create.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UsersListComponent,
+    UsersCreateComponent
   ],
   imports: [
     BrowserModule,
