@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Database, getDatabase, ref, onValue, set, object, listVal } from '@angular/fire/database';
+import { Database, getDatabase, ref, listVal, push, remove, update } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
@@ -11,16 +11,21 @@ export class DatabaseService {
   constructor(private database: Database){}
 
   private db = getDatabase();
+  private userRef = ref(this.db, 'users/');
 
   getAllUsers(): Observable<User[]> {
-    return listVal<User>(ref(this.db, 'users/'));
+    return listVal<User>(this.userRef);
   }
 
-  writeUserData(userId: string, name: string, email: string): void {
-    
-    set(ref(this.db, 'users/' + userId), {
-      username: name,
-      email: email
-    }).catch((err)=> console.error(err));
+  addUser(data: User): void {
+    push(this.userRef, data).catch((err)=> console.error(err));
+  }
+
+  removeUser(data: User): void {
+    remove(ref(this.db, 'users/' + data.$key)).catch((err)=> console.error(err));
+  }
+
+  updateUser(data: User): void {
+    update(ref(this.db, 'users/' + data.$key), data).catch((err)=> console.error(err));
   }
 }
