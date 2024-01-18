@@ -8,7 +8,7 @@ import { User } from '../models/user.model';
 })
 export class DatabaseService {
 
-  constructor(private database: Database){}
+  constructor(private readonly database: Database){}
 
   private db = getDatabase();
   private userRef = ref(this.db, 'users/');
