@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "angular-17-firebase-crud-application",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

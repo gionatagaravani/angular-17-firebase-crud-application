@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-17-crud": {
+      "hosting": {
+        "angular-17-firebase-crud-application": [
+          "angular-17-crud"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-17-crud"
+  }
+}

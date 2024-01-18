@@ -104,8 +104,28 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "angular-17-firebase-crud-application:build:production",
+              "serveTarget": "angular-17-firebase-crud-application:serve:production"
+            },
+            "development": {
+              "buildTarget": "angular-17-firebase-crud-application:build:development",
+              "serveTarget": "angular-17-firebase-crud-application:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "b465c723-0782-4781-a1fb-f43029e28ecf"
   }
 }
