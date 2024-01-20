@@ -36,7 +36,24 @@ export class UsersCreateComponent {
   }
 
   onSubmit(): void {
-    console.warn('Your order has been submitted', this.userForm.value);
-    // this.userForm.reset();
+    this.database.addUser({ 
+      firstName: this.userForm.value.firstName?.toString(),
+      lastName: this.userForm.value.lastName?.toString(),
+      email: this.userForm.value.email?.toString(),
+      mobileNumber: this.userForm.value?.mobileNumber ?? undefined
+    }).then((res) => {
+      if (res) {
+        this.Toast.fire({
+          icon: 'success',
+          title: 'User created correctly!',
+        });
+      } else {
+        this.Toast.fire({
+          icon: 'error',
+          title: 'Error! User not created!',
+        })
+      }
+      this.userForm.reset();
+    });
   }
 }

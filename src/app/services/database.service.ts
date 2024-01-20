@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Database, getDatabase, ref, listVal, push, remove, update, list, objectVal, object } from '@angular/fire/database';
-import { Observable } from 'rxjs';
+import { Observable, retry } from 'rxjs';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -17,8 +17,16 @@ export class DatabaseService {
     return object(this.userRef);
   }
 
-  addUser(data: User): void {
-    push(this.userRef, data).catch((err)=> console.error(err));
+  async addUser(data: User): Promise<boolean> {
+    let res = false;
+    await push(this.userRef, data).catch((err)=> console.error(err))
+      .catch((err) => {
+        return false;
+      })
+      .finally(() => {
+        res = true;
+      });
+    return res;
   }
 
   removeUser(data: User): void {
