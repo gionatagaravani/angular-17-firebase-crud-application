@@ -1,1 +1,19 @@
-<p>users-create works!</p>
+<div class="container w-50">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="form-group mt-2">
+          <input type="text" class="form-control" aria-describedby="emailHelp" formControlName="firstName" placeholder="Name">
+        </div>
+        <div class="form-group mt-2">
+          <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
+        </div>
+        <div class="form-group mt-2">
+          <input type="text" class="form-control" formControlName="email" placeholder="Email">
+        </div>
+        <div class="form-group mt-2">
+          <input type="number" class="form-control" formControlName="mobileNumber" placeholder="Mobile number">
+        </div>
+        <div class="text-center mt-2">
+            <button type="submit" class="btn btn-outline-success mt-2 w-20">Create</button>
+        </div>
+    </form>
+</div>
