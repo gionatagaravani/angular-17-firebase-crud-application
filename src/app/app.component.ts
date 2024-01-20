@@ -1,17 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { DatabaseService } from './services/database.service';
-
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'Angular 17 - Firebase CRUD';
-
-  constructor(private readonly database: DatabaseService) {}
-
-  ngOnInit(): void {
-    this.database.getAllUsers().subscribe((data) => console.log(data))
-  }
 }
