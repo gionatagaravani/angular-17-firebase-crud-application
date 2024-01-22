@@ -1,5 +1,11 @@
 <div class="container w-50">
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <a routerLink="/"> Go back</a>
+  <div class="card mt-2">
+    <div class="card-header">
+      Create new user
+    </div>
+    <div class="card-body">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="form-group mt-2">
           <input type="text" class="form-control" aria-describedby="emailHelp" formControlName="firstName" placeholder="Name">
         </div>
@@ -16,4 +22,7 @@
             <button type="submit" class="btn btn-outline-success mt-2 w-20">Create</button>
         </div>
     </form>
+    </div>
+  </div>
+    
 </div>

@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DatabaseService } from '../../services/database.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-create',
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class UsersCreateComponent {
 
-  constructor(private formBuilder: FormBuilder, private readonly database: DatabaseService) {}
+  constructor(private formBuilder: FormBuilder, private readonly database: DatabaseService, private router: Router) {}
 
   userForm = this.formBuilder.group({
     firstName: '',
@@ -47,6 +48,7 @@ export class UsersCreateComponent {
           icon: 'success',
           title: 'User created correctly!',
         });
+        this.router.navigate(['/']);
       } else {
         this.Toast.fire({
           icon: 'error',
