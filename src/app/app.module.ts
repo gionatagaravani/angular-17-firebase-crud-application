@@ -9,17 +9,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { UsersListComponent } from './components/users-list/users-list.component';
 import { UsersCreateComponent } from './components/users-create/users-create.component';
+import { UsersEditComponent } from './components/users-edit/users-edit.component';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
-    UsersCreateComponent
+    UsersCreateComponent,
+    UsersEditComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase())

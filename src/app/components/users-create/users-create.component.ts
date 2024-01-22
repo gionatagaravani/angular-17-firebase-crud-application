@@ -49,13 +49,13 @@ export class UsersCreateComponent {
           title: 'User created correctly!',
         });
         this.router.navigate(['/']);
-      } else {
-        this.Toast.fire({
-          icon: 'error',
-          title: 'Error! User not created!',
-        })
       }
       this.userForm.reset();
+    }).catch((err) => {
+      this.Toast.fire({
+        icon: 'error',
+        title: 'Error! User not created!',
+      })
     });
   }
 }
