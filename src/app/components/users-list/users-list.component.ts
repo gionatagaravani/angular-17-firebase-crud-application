@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DatabaseService } from '../../services/database.service';
 import { User } from '../../models/user.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users-list',
@@ -8,6 +9,18 @@ import { User } from '../../models/user.model';
   styleUrl: './users-list.component.css'
 })
 export class UsersListComponent {
+
+  private Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
 
   users: User[] = [];
 
@@ -28,5 +41,36 @@ export class UsersListComponent {
       });
       this.users = users;
     })
+  }
+
+  deleteUser(key: any): void {
+    const user = this.users.find((u) => (u.$key === key));
+    if(user) {
+
+      Swal.fire({
+        title: `Are you sure to remove ${user.firstName} ${user.lastName}?`,
+        showConfirmButton: false,
+        showCancelButton: true,
+        showDenyButton: true,
+        denyButtonText: "Yes",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isDenied) {
+          this.database.removeUser(user).then((res) => {
+            if (res) {
+              this.Toast.fire({
+                icon: 'success',
+                title: 'User deleted correctly!',
+              });
+            } else {
+              this.Toast.fire({
+                icon: 'error',
+                title: 'Error! User not deleted!',
+              })
+            }
+          })
+        }
+      });
+    }
   }
 }

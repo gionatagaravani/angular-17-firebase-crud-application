@@ -10,6 +10,7 @@
           <th scope="col" class="darkhead">Last Name</th>
           <th scope="col" class="darkhead">Email</th>
           <th scope="col" class="darkhead">Mobile Number</th>
+          <th scope="col" class="darkhead"></th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +21,7 @@
           <td>{{ user.lastName }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.mobileNumber }}</td>
+          <td><a role="button" (click)="deleteUser(user.$key)"><i class="fa-solid fa-trash" style="color: #ff2600;"></i></a></td>
         </tr>
       } @empty {
         <p class="text-center">No users yet!</p>

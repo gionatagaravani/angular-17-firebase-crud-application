@@ -19,7 +19,7 @@ export class DatabaseService {
 
   async addUser(data: User): Promise<boolean> {
     let res = false;
-    await push(this.userRef, data).catch((err)=> console.error(err))
+    await push(this.userRef, data)
       .catch((err) => {
         return false;
       })
@@ -29,8 +29,16 @@ export class DatabaseService {
     return res;
   }
 
-  removeUser(data: User): void {
-    remove(ref(this.db, 'users/' + data.$key)).catch((err)=> console.error(err));
+  async removeUser(data: User): Promise<boolean> {
+    let res = false;
+    await remove(ref(this.db, 'users/' + data.$key))
+    .catch((err) => {
+      return false;
+    })
+    .finally(() => {
+      res = true;
+    });
+    return res;
   }
 
   updateUser(data: User): void {
