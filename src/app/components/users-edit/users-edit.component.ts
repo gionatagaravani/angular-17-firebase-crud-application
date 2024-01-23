@@ -3,8 +3,9 @@ import { FormBuilder } from '@angular/forms';
 import { DatabaseService } from '../../services/database.service';
 import { User } from '../../models/user.model';
 import { of, switchMap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-users-edit',
@@ -27,7 +28,13 @@ export class UsersEditComponent implements OnInit {
 
   private key: string = '';
 
-  constructor(private formBuilder: FormBuilder, private readonly database: DatabaseService, private route: ActivatedRoute) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private readonly database: DatabaseService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private loadingService: LoaderService
+  ) {}
 
   userForm = this.formBuilder.group({
     firstName: '',
@@ -44,20 +51,26 @@ export class UsersEditComponent implements OnInit {
   fetchUsersData(): void {
     this.key = this.route.snapshot.params['id'];
     if (this.key) {
+      this.loadingService.setLoading(true);
       this.database.getUserById(this.key).subscribe((data) => {
         this.userForm.setValue(data.snapshot.val());
+        this.loadingService.setLoading(false);
       });
+    } else {
+      this.router.navigate(['/']);
     }
   }
 
 
   onSubmit(): void {
+    this.loadingService.setLoading(true);
     this.database.updateUser({ 
       firstName: this.userForm.value.firstName?.toString(),
       lastName: this.userForm.value.lastName?.toString(),
       email: this.userForm.value.email?.toString(),
       mobileNumber: Number(this.userForm.value?.mobileNumber)
     }, this.key).then((res) => {
+      this.loadingService.setLoading(false);
       if (res) {
         this.Toast.fire({
           icon: 'success',
@@ -66,6 +79,7 @@ export class UsersEditComponent implements OnInit {
       }
     }).catch((err) => {
       console.error(err)
+      this.loadingService.setLoading(false);
       this.Toast.fire({
         icon: 'error',
         title: 'Error! User not updated!',

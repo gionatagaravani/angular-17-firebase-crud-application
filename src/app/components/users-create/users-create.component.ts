@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { DatabaseService } from '../../services/database.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-users-create',
@@ -11,7 +12,12 @@ import { Router } from '@angular/router';
 })
 export class UsersCreateComponent {
 
-  constructor(private formBuilder: FormBuilder, private readonly database: DatabaseService, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private readonly database: DatabaseService,
+    private router: Router,
+    private loadingService: LoaderService
+  ) {}
 
   userForm = this.formBuilder.group({
     firstName: '',
@@ -37,12 +43,14 @@ export class UsersCreateComponent {
   }
 
   onSubmit(): void {
+    this.loadingService.setLoading(true);
     this.database.addUser({ 
       firstName: this.userForm.value.firstName?.toString(),
       lastName: this.userForm.value.lastName?.toString(),
       email: this.userForm.value.email?.toString(),
       mobileNumber: this.userForm.value?.mobileNumber ?? undefined
     }).then((res) => {
+      this.loadingService.setLoading(false);
       if (res) {
         this.Toast.fire({
           icon: 'success',
@@ -52,6 +60,7 @@ export class UsersCreateComponent {
       }
       this.userForm.reset();
     }).catch((err) => {
+      this.loadingService.setLoading(false);
       this.Toast.fire({
         icon: 'error',
         title: 'Error! User not created!',

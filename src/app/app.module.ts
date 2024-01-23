@@ -11,13 +11,15 @@ import { UsersListComponent } from './components/users-list/users-list.component
 import { UsersCreateComponent } from './components/users-create/users-create.component';
 import { UsersEditComponent } from './components/users-edit/users-edit.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
     UsersCreateComponent,
-    UsersEditComponent
+    UsersEditComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,6 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase())
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

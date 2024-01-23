@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DatabaseService } from '../../services/database.service';
 import { User } from '../../models/user.model';
 import Swal from 'sweetalert2';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-users-list',
@@ -24,14 +25,14 @@ export class UsersListComponent {
 
   users: User[] = [];
 
-  constructor(private readonly database: DatabaseService) {}
+  constructor(private readonly database: DatabaseService, private loadingService: LoaderService) {}
 
   ngOnInit(): void {
-    // this.database.addUser({ lastName: 'weew', email: 'ssdsd', firstName: 'aaaa', mobileNumber: 12344563 });
     this.fetchUsersData();
   }
 
   fetchUsersData(): void {
+    this.loadingService.setLoading(true);
     this.database.getAllUsers().subscribe((data) => {
       let users: User[] = [];
       data.snapshot.forEach((childSnapshot: { key: string; val: () => User; }) => {
@@ -40,6 +41,7 @@ export class UsersListComponent {
         users.push(user);
       });
       this.users = users;
+      this.loadingService.setLoading(false);
     })
   }
 
@@ -56,18 +58,23 @@ export class UsersListComponent {
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isDenied) {
+          this.loadingService.setLoading(true);
           this.database.removeUser(user).then((res) => {
+            this.loadingService.setLoading(false);
             if (res) {
               this.Toast.fire({
                 icon: 'success',
                 title: 'User deleted correctly!',
               });
-            } else {
-              this.Toast.fire({
-                icon: 'error',
-                title: 'Error! User not deleted!',
-              })
             }
+          }).catch((err)=>{
+            console.error(err);
+            this.loadingService.setLoading(false);
+            this.Toast.fire({
+              icon: 'error',
+              title: 'Error! User not deleted!',
+            })
+            
           })
         }
       });
