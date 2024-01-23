@@ -9,6 +9,6 @@
     }
   },
   "projects": {
-    "default": "angular-17-crud"
+    "default": "angular-17-crud-application"
   }
 }
